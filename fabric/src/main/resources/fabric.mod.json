@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "healthbar",
+  "version": "${version}",
+
+  "name": "HealthBar",
+  "description": "",
+  "authors": [],
+  "contact": {},
+
+  "license": "Apache 2.0",
+  "icon": "icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "ca.favro.healthbar.fabric.HealthBarFabric"
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": ">=1.20.4"
+  }
+}

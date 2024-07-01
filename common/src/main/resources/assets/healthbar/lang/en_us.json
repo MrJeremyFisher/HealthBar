@@ -1,0 +1,20 @@
+{
+  "healthbar.settings.category": "Health Bar",
+  "healthbar.settings.key": "Health Bar Settings Key",
+  "healthbar.screen.main": "Health Bar Settings",
+  "healthbar.screen.appearance": "Appearance Settings",
+  "healthbar.screen.toggle": "Health Bar: %s",
+  "healthbar.screen.slider.red": "Red",
+  "healthbar.screen.slider.green": "Green",
+  "healthbar.screen.slider.blue": "Blue",
+  "healthbar.screen.slider.opacity": "Opacity",
+  "healthbar.screen.slider.scale": "Scale",
+  "healthbar.screen.slider.text_scale": "Text Scale",
+  "healthbar.screen.slider.offset.x": "X Offset",
+  "healthbar.screen.slider.offset.y": "Y Offset",
+  "healthbar.screen.slider.width": "Width",
+  "healthbar.screen.slider.height": "Height",
+  "healthbar.screen.show_always": "Show Always",
+  "healthbar.screen.slider.max_quiver": "Quiver Health",
+  "healthbar.screen.slider.quiver_intensity": "Quiver Intensity"
+}
