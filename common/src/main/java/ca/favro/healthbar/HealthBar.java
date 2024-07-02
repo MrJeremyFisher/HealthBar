@@ -16,8 +16,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
+import java.util.Random;
 
 public class HealthBar {
 	public static final String MOD_ID = "healthbar";
@@ -28,6 +29,7 @@ public class HealthBar {
 	private final ResourceLocation BAR_TEXTURE = new ResourceLocation(MOD_ID, "gui/bar.png");
 	private final ResourceLocation BORDER_TEXTURE = new ResourceLocation(MOD_ID, "gui/border.png");
 
+	private final Random random = new Random();
 	public HealthBar() {
 		settingsKey = new KeyMapping("healthbar.settings.key", GLFW.GLFW_KEY_H, "healthbar.settings.category");
 	}
@@ -61,10 +63,20 @@ public class HealthBar {
 		PoseStack poseStack = guiGraphics.pose();
 		Minecraft minecraft = Minecraft.getInstance();
 
-		if (minecraft.options.hideGui || minecraft.player.isCreative()) return;
+		if (minecraft.options.hideGui
+				|| minecraft.player.isCreative()
+				|| !healthBarConfig.isEnabled()
+				|| (healthBarConfig.isBarShowAlways() && minecraft.player.getHealth() >= minecraft.player.getMaxHealth()))
+			return;
 
-		int x = (int) (minecraft.getWindow().getGuiScaledWidth() / healthBarConfig.getBarScale() * healthBarConfig.getxOffset() - healthBarConfig.getBarWidth() / 2);
-		int y = (int) (minecraft.getWindow().getGuiScaledHeight() / healthBarConfig.getBarScale() * healthBarConfig.getyOffset());
+		float quiverIntensity = 0;
+
+		if (minecraft.player.getHealth() < healthBarConfig.getBarQuiverHealth()) {
+			quiverIntensity = (healthBarConfig.getBarQuiverHealth() - (minecraft.player.getHealth() / minecraft.player.getMaxHealth())) * healthBarConfig.getBarQuiverIntensity() / healthBarConfig.getBarQuiverHealth();
+		}
+
+		int x = (int) (minecraft.getWindow().getGuiScaledWidth() / healthBarConfig.getBarScale() * healthBarConfig.getxOffset() - ((float) healthBarConfig.getBarWidth() / 2) + (random.nextGaussian() * quiverIntensity));
+		int y = (int) (minecraft.getWindow().getGuiScaledHeight() / healthBarConfig.getBarScale() * healthBarConfig.getyOffset() + (random.nextGaussian() * quiverIntensity));
 
 		RenderSystem.enableBlend();
 		poseStack.pushPose();

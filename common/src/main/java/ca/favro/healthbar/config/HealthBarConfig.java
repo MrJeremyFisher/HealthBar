@@ -2,7 +2,7 @@ package ca.favro.healthbar.config;
 
 import com.google.gson.Gson;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;

@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class MainConfigScreen extends Screen {
 	private final HealthBarConfig healthBarConfig;
@@ -23,6 +23,8 @@ public class MainConfigScreen extends Screen {
 	private SliderButton yOffsetSlider;
 	private SliderButton widthSlider;
 	private SliderButton heightSlider;
+	private Button enableButton;
+	private Button showAlwaysButton;
 	private SliderButton quiverHealthSlider;
 	private SliderButton quiverIntensitySlider;
 
@@ -50,7 +52,7 @@ public class MainConfigScreen extends Screen {
 		y += 24;
 
 		addRenderableWidget(
-				opacitySlider = new SliderButton(x + 66 + 1, y, 132, 0f, 1f, Component.translatable("healthbar.screen.slider.opacity"), healthBarConfig.getBarOpacity(), false)
+				opacitySlider = new SliderButton(x, y, 200, 0f, 1f, Component.translatable("healthbar.screen.slider.opacity"), healthBarConfig.getBarOpacity(), false)
 		);
 
 		y += 24;
@@ -82,8 +84,16 @@ public class MainConfigScreen extends Screen {
 
 		y += 24;
 
-		addRenderableWidget(Button.builder(Component.translatable("healthbar.screen.toggle", (healthBarConfig.isBarShowAlways() ? "On" : "Off")),
+		addRenderableWidget(showAlwaysButton = Button.builder(Component.translatable("healthbar.screen.always_show", (healthBarConfig.isBarShowAlways() ? "On" : "Off")),
 						(btn) -> healthBarConfig.setBarShowAlways(!healthBarConfig.isBarShowAlways()))
+				.bounds(x, y, 200, 20)
+				.build()
+		);
+
+		y += 24;
+
+		addRenderableWidget(enableButton = Button.builder(Component.translatable("healthbar.screen.toggle", (healthBarConfig.isEnabled() ? "On" : "Off")),
+						(btn) -> healthBarConfig.setEnabled(!healthBarConfig.isEnabled()))
 				.bounds(x, y, 200, 20)
 				.build()
 		);
@@ -109,6 +119,9 @@ public class MainConfigScreen extends Screen {
 
 	@Override
 	public void tick() {
+		enableButton.setMessage(Component.translatable("healthbar.screen.toggle", (healthBarConfig.isEnabled() ? "On" : "Off")));
+		showAlwaysButton.setMessage(Component.translatable("healthbar.screen.always_show", (healthBarConfig.isEnabled() ? "On" : "Off")));
+
 		boolean isChanged;
 
 		isChanged = healthBarConfig.setHealthStringFormat(healthStringFormatField.getValue());
