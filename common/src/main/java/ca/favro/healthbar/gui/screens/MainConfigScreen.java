@@ -120,7 +120,7 @@ public class MainConfigScreen extends Screen {
 	@Override
 	public void tick() {
 		enableButton.setMessage(Component.translatable("healthbar.screen.toggle", (healthBarConfig.isEnabled() ? "On" : "Off")));
-		showAlwaysButton.setMessage(Component.translatable("healthbar.screen.always_show", (healthBarConfig.isEnabled() ? "On" : "Off")));
+		showAlwaysButton.setMessage(Component.translatable("healthbar.screen.always_show", (healthBarConfig.isBarShowAlways() ? "On" : "Off")));
 
 		boolean isChanged;
 

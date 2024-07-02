@@ -225,7 +225,7 @@ public class HealthBarConfig {
 		config.barScale = this.getBarScale();
 		config.barShowAlways = this.isBarShowAlways();
 		config.barOpacity = this.getBarOpacity();
-		config.barQuiverFraction = this.getBarQuiverHealth();
+		config.barQuiverHealth = this.getBarQuiverHealth();
 		config.barQuiverIntensity = this.getBarQuiverIntensity();
 		config.color = this.getHealthBarColor().getRGB();
 
@@ -260,7 +260,7 @@ public class HealthBarConfig {
 		this.setBarScale(config.barScale);
 		this.setBarShowAlways(config.barShowAlways);
 		this.setBarOpacity(config.barOpacity);
-		this.setBarQuiverHealth(config.barQuiverFraction);
+		this.setBarQuiverHealth(config.barQuiverHealth);
 		this.setBarQuiverIntensity(config.barQuiverIntensity);
 		this.setHealthBarColor(new Color(config.color));
 
@@ -278,7 +278,7 @@ public class HealthBarConfig {
 		public float barScale;
 		public boolean barShowAlways;
 		public float barOpacity;
-		public float barQuiverFraction;
+		public float barQuiverHealth;
 		public float barQuiverIntensity;
 		public int color;
 	}

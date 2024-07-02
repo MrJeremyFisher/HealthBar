@@ -66,7 +66,7 @@ public class HealthBar {
 		if (minecraft.options.hideGui
 				|| minecraft.player.isCreative()
 				|| !healthBarConfig.isEnabled()
-				|| (healthBarConfig.isBarShowAlways() && minecraft.player.getHealth() >= minecraft.player.getMaxHealth()))
+				|| (!healthBarConfig.isBarShowAlways() && minecraft.player.getHealth() >= minecraft.player.getMaxHealth()))
 			return;
 
 		float quiverIntensity = 0;
