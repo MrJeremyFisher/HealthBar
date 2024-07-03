@@ -1,16 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[49,)"
 license = "Apache 2.0"
-issueTrackerURL = "https://jerem/HealthBar/issues"
+issueTrackerURL = "https://github.com/MrJeremyFisher/HealthBar/issues"
 [[mods]]
 modId = "healthbar"
 version = "${version}"
+authors = "MrJeremyFisher"
 displayName = "HealthBar"
 logoFile = "icon.png"
 
-description = '''
-
-'''
+description = "A lightweight and highly configurable health display."
 
 [[dependencies.healthbar]]
 modId = "forge"

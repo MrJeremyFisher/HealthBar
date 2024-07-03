@@ -4,9 +4,11 @@
   "version": "${version}",
 
   "name": "HealthBar",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "description": "A lightweight and highly configurable health display.",
+  "authors": ["MrJeremyFisher"],
+  "contact": {
+    "issues": "https://github.com/MrJeremyFisher/HealthBar/issues"
+  },
 
   "license": "Apache 2.0",
   "icon": "icon.png",
