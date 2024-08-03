@@ -21,6 +21,6 @@ side = "CLIENT"
 [[dependencies.healthbar]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.6,)"
+versionRange = "[1.20.6]"
 ordering = "NONE"
 side = "CLIENT"
