@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[49,)"
+loaderVersion = "[1,)"
 license = "Apache 2.0"
 issueTrackerURL = "${issues_url}"
 [[mods]]
@@ -12,14 +12,15 @@ logoFile = "icon.png"
 description = "A lightweight and highly configurable health display."
 
 [[dependencies.healthbar]]
-modId = "forge"
+modId = "neoforge"
 mandatory = true
-versionRange = "[49,)"
+versionRange = "[20.6,)"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"
+
 [[dependencies.healthbar]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.4,)"
+versionRange = "[1.20.6,)"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"

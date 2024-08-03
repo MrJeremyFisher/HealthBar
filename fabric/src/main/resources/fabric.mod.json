@@ -7,7 +7,7 @@
   "description": "A lightweight and highly configurable health display.",
   "authors": ["MrJeremyFisher"],
   "contact": {
-    "issues": "https://github.com/MrJeremyFisher/HealthBar/issues"
+    "issues": "${issues_url}"
   },
 
   "license": "Apache 2.0",
