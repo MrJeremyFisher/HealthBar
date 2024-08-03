@@ -33,14 +33,12 @@ public class HealthBarConfig {
 		return enabled;
 	}
 
-	public boolean setEnabled(boolean enabled) {
+	public void setEnabled(boolean enabled) {
 		if (this.enabled == enabled) {
-			return false;
+			return;
 		}
 
 		this.enabled = enabled;
-
-		return true;
 	}
 
 	public File getConfigFile() {
@@ -146,14 +144,12 @@ public class HealthBarConfig {
 		return barShowAlways;
 	}
 
-	public boolean setBarShowAlways(boolean barShowAlways) {
+	public void setBarShowAlways(boolean barShowAlways) {
 		if (this.barShowAlways == barShowAlways) {
-			return false;
+			return;
 		}
 
 		this.barShowAlways = barShowAlways;
-
-		return true;
 	}
 
 	public float getBarOpacity() {
