@@ -14,13 +14,13 @@ description = "A lightweight and highly configurable health display."
 [[dependencies.healthbar]]
 modId = "neoforge"
 mandatory = true
-versionRange = "[20.6,)"
+versionRange = "[21.1,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.healthbar]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.6]"
+versionRange = "[1.21.1]"
 ordering = "NONE"
 side = "CLIENT"

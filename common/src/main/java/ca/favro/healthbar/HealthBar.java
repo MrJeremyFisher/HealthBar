@@ -4,6 +4,7 @@ import ca.favro.healthbar.config.HealthBarConfig;
 import ca.favro.healthbar.gui.screens.MainConfigScreen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -26,8 +27,8 @@ public class HealthBar {
 	private final KeyMapping settingsKey;
 	private HealthBarConfig healthBarConfig;
 
-	private final ResourceLocation BAR_TEXTURE = new ResourceLocation(MOD_ID, "gui/bar.png");
-	private final ResourceLocation BORDER_TEXTURE = new ResourceLocation(MOD_ID, "gui/border.png");
+	private final ResourceLocation BAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/bar.png");
+	private final ResourceLocation BORDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/border.png");
 
 	private final Random random = new Random();
 	public HealthBar() {
@@ -123,15 +124,14 @@ public class HealthBar {
 	}
 
 	private void drawVertexRect(PoseStack poseStack, float x, float y, float height, float width) {
-		Tesselator tess = Tesselator.getInstance();
-		BufferBuilder buff = tess.getBuilder();
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 		Matrix4f mat = poseStack.last().pose();
-		buff.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		buff.vertex(mat, x, y + height, 0).uv(0, 1).endVertex(); // TL
-		buff.vertex(mat, x + width, y + height, 0).uv(1, 1).endVertex(); // TR
-		buff.vertex(mat, x + width, y, 0).uv(1, 0).endVertex(); // BR
-		buff.vertex(mat, x, y, 0).uv(0, 0).endVertex(); // BL
-		tess.end();
+		buffer.addVertex(mat, x, y + height, 0).setUv(0, 1); // TL
+		buffer.addVertex(mat, x + width, y + height, 0).setUv(1, 1); // TR
+		buffer.addVertex(mat, x + width, y, 0).setUv(1, 0); // BR
+		buffer.addVertex(mat, x, y, 0).setUv(0, 0); // BL
+		BufferUploader.drawWithShader(buffer.buildOrThrow());
 	}
 }
 
