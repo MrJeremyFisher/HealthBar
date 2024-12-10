@@ -1,25 +1,26 @@
 modLoader = "javafml"
-loaderVersion = "[49,)"
+loaderVersion = "[52,)"
 license = "Apache 2.0"
 issueTrackerURL = "${issues_url}"
+
 [[mods]]
 modId = "healthbar"
 version = "${version}"
 authors = "MrJeremyFisher"
 displayName = "HealthBar"
 logoFile = "icon.png"
-
 description = "A lightweight and highly configurable health display."
 
 [[dependencies.healthbar]]
 modId = "forge"
 mandatory = true
-versionRange = "[49,)"
+versionRange = "[52,)"
 ordering = "NONE"
 side = "BOTH"
+
 [[dependencies.healthbar]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.4,)"
+versionRange = "[1.21.1,)"
 ordering = "NONE"
 side = "BOTH"

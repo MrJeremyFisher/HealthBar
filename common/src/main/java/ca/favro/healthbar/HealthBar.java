@@ -19,6 +19,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class HealthBar {
@@ -26,6 +27,7 @@ public class HealthBar {
 
 	private final KeyMapping settingsKey;
 	private HealthBarConfig healthBarConfig;
+	private static HealthBar instance;
 
 	private final ResourceLocation BAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/bar.png");
 	private final ResourceLocation BORDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/border.png");
@@ -33,6 +35,7 @@ public class HealthBar {
 	private final Random random = new Random();
 	public HealthBar() {
 		settingsKey = new KeyMapping("healthbar.settings.key", GLFW.GLFW_KEY_H, "healthbar.settings.category");
+		instance = this;
 	}
 
 	public void init() {
@@ -40,6 +43,14 @@ public class HealthBar {
 		File configDir = new File(gameDirectory, "/config/");
 		File configFile = new File(configDir, "healthbar_config.json");
 
+		if (!configFile.exists()) {
+            try {
+                configFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+		
 		healthBarConfig = new HealthBarConfig(configFile);
 
 		healthBarConfig.load();
@@ -120,7 +131,7 @@ public class HealthBar {
 			poseStack.popPose();
 		}
 
-		RenderSystem.enableBlend();
+		RenderSystem.disableBlend();
 	}
 
 	private void drawVertexRect(PoseStack poseStack, float x, float y, float height, float width) {
@@ -132,6 +143,10 @@ public class HealthBar {
 		buffer.addVertex(mat, x + width, y, 0).setUv(1, 0); // BR
 		buffer.addVertex(mat, x, y, 0).setUv(0, 0); // BL
 		BufferUploader.drawWithShader(buffer.buildOrThrow());
+	}
+	
+	public static HealthBar getInstance() {
+		return instance;
 	}
 }
 

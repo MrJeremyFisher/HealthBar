@@ -2,8 +2,6 @@ package ca.favro.healthbar.forge;
 
 import ca.favro.healthbar.HealthBar;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,11 +31,5 @@ public class HealthBarForge {
 	public void onClientTick(TickEvent.ClientTickEvent event) {
 		if (event.phase == TickEvent.Phase.START)
 			healthBar.tick();
-	}
-
-	@SubscribeEvent
-	public void onRender(RenderGuiOverlayEvent.Post event) {
-		if (event.getOverlay() == VanillaGuiOverlay.PLAYER_HEALTH.type())
-			healthBar.render(event.getGuiGraphics());
 	}
 }
