@@ -9,6 +9,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
 import java.awt.Color;
+import java.util.IllegalFormatException;
 
 public class MainConfigScreen extends Screen {
 	private final HealthBarConfig healthBarConfig;
@@ -124,7 +125,14 @@ public class MainConfigScreen extends Screen {
 
 		boolean isChanged;
 
-		isChanged = healthBarConfig.setHealthStringFormat(healthStringFormatField.getValue());
+		boolean fmtIsValid = false;
+		try {
+			String.format(healthStringFormatField.getValue(), 1f, 1f);
+			fmtIsValid = true;
+		} catch (IllegalFormatException e) {}
+				
+		
+		isChanged = fmtIsValid && healthBarConfig.setHealthStringFormat(healthStringFormatField.getValue());
 		isChanged = healthBarConfig.setTextScale(textScaleSlider.getValue()) || isChanged;
 		isChanged = healthBarConfig.setxOffset(xOffsetSlider.getValue()) || isChanged;
 		isChanged = healthBarConfig.setyOffset(yOffsetSlider.getValue()) || isChanged;
