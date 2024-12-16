@@ -12,7 +12,9 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ShaderManager;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
@@ -33,6 +35,7 @@ public class HealthBar {
 	private final ResourceLocation BORDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/border.png");
 
 	private final Random random = new Random();
+	
 	public HealthBar() {
 		settingsKey = new KeyMapping("healthbar.settings.key", GLFW.GLFW_KEY_H, "healthbar.settings.category");
 		instance = this;
@@ -95,14 +98,14 @@ public class HealthBar {
 		poseStack.scale(healthBarConfig.getBarScale(), healthBarConfig.getBarScale(), 1);
 
 		// Setup and draw bar
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShader(CoreShaders.POSITION_TEX);
 		RenderSystem.setShaderTexture(0, BAR_TEXTURE);
 		RenderSystem.setShaderColor(healthBarConfig.getHealthBarColor().getRed() / 255.0f, healthBarConfig.getHealthBarColor().getGreen() / 255.0f, healthBarConfig.getHealthBarColor().getBlue() / 255.0f, healthBarConfig.getBarOpacity());
 
 		drawVertexRect(poseStack, x, y, healthBarConfig.getBarHeight(), healthBarConfig.getBarWidth() * (minecraft.player.getHealth() / minecraft.player.getMaxHealth()));
 
 		// Setup and draw border
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShader(CoreShaders.POSITION_TEX);
 		RenderSystem.setShaderTexture(0, BORDER_TEXTURE);
 		RenderSystem.setShaderColor(1, 1, 1, healthBarConfig.getBarOpacity());
 

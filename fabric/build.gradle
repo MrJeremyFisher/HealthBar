@@ -29,8 +29,9 @@ processResources {
     filesMatching("fabric.mod.json") {
         expand(
                 [
-                        "version"   : project.version,
-                        "issues_url": rootProject.issues_url
+                        "version"          : project.version,
+                        "minecraft_version": project.minecraft_version,
+                        "issues_url"       : rootProject.issues_url
                 ]
         )
     }

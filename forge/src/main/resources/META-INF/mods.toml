@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[52,)"
+loaderVersion = "[${forge_version},)"
 license = "Apache 2.0"
 issueTrackerURL = "${issues_url}"
 
@@ -14,13 +14,13 @@ description = "A lightweight and highly configurable health display."
 [[dependencies.healthbar]]
 modId = "forge"
 mandatory = true
-versionRange = "[52,)"
+versionRange = "[${forge_version},)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.healthbar]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.21.1,)"
+versionRange = "[${minecraft_version}]"
 ordering = "NONE"
 side = "BOTH"

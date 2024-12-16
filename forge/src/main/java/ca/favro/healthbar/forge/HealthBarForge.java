@@ -12,14 +12,14 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class HealthBarForge {
 	private static HealthBar healthBar;
 
-	public HealthBarForge() {
+	public HealthBarForge(FMLJavaModLoadingContext fmlJavaModLoadingContext) {
 		healthBar = new HealthBar();
 
 		healthBar.init();
 
 		MinecraftForge.EVENT_BUS.register(this);
 
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerBindings);
+		fmlJavaModLoadingContext.getModEventBus().addListener(this::registerBindings);
 	}
 
 	@SubscribeEvent
