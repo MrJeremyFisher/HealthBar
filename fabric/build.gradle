@@ -25,6 +25,8 @@ dependencies {
 
 processResources {
     inputs.property "version", project.version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "issues_url", project.issues_url
 
     filesMatching("fabric.mod.json") {
         expand(
