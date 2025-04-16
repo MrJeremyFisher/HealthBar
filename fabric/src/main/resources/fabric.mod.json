@@ -5,7 +5,9 @@
 
   "name": "HealthBar",
   "description": "A lightweight and highly configurable health display.",
-  "authors": ["MrJeremyFisher"],
+  "authors": [
+    "MrJeremyFisher"
+  ],
   "contact": {
     "issues": "${issues_url}"
   },

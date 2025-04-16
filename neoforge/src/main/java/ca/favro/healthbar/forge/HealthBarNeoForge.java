@@ -12,30 +12,30 @@ import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(HealthBar.MOD_ID)
 public class HealthBarNeoForge {
-	private static HealthBar healthBar;
+    private static HealthBar healthBar;
 
-	public HealthBarNeoForge(IEventBus bus) {
-		healthBar = new HealthBar();
+    public HealthBarNeoForge(IEventBus bus) {
+        healthBar = new HealthBar();
 
-		healthBar.init();
+        healthBar.init();
 
-		NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
 
-		bus.addListener(this::registerBindings);
-	}
+        bus.addListener(this::registerBindings);
+    }
 
-	public void registerBindings(RegisterKeyMappingsEvent event) {
-		event.register(healthBar.getSettingsKey());
-	}
+    public void registerBindings(RegisterKeyMappingsEvent event) {
+        event.register(healthBar.getSettingsKey());
+    }
 
-	@SubscribeEvent
-	public void onClientTick(ClientTickEvent.Pre event) {
-		healthBar.tick();
-	}
+    @SubscribeEvent
+    public void onClientTick(ClientTickEvent.Pre event) {
+        healthBar.tick();
+    }
 
-	@SubscribeEvent
-	public void onRender(RenderGuiLayerEvent.Post event) {
-		if (event.getName() == VanillaGuiLayers.PLAYER_HEALTH)
-			healthBar.render(event.getGuiGraphics());
-	}
+    @SubscribeEvent
+    public void onRender(RenderGuiLayerEvent.Post event) {
+        if (event.getName() == VanillaGuiLayers.PLAYER_HEALTH)
+            healthBar.render(event.getGuiGraphics(), event.getPartialTick());
+    }
 }

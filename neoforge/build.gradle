@@ -30,10 +30,10 @@ processResources {
     filesMatching("META-INF/neoforge.mods.toml") {
         expand(
                 [
-                        "version"   : project.version,
-                        "neoforge_version"   : project.neoforge_version,
-                        "minecraft_version"   : project.minecraft_version,
-                        "issues_url": rootProject.issues_url
+                        "version"          : project.version,
+                        "neoforge_version" : project.neoforge_version,
+                        "minecraft_version": project.minecraft_version,
+                        "issues_url"       : rootProject.issues_url
                 ]
         )
     }

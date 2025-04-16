@@ -20,6 +20,6 @@ public class PostRenderGuiOverlayMixin {
             )
     )
     private void onRenderHealth(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) { // Hacky way to add a Layer because Forge sucks
-        HealthBar.getInstance().render(guiGraphics);
+        HealthBar.getInstance().render(guiGraphics, deltaTracker);
     }
 }

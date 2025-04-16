@@ -37,10 +37,10 @@ processResources {
     filesMatching("META-INF/mods.toml") {
         expand(
                 [
-                        "version"   : project.version,
-                        "forge_version"   : project.forge_version,
-                        "minecraft_version"   : project.minecraft_version,
-                        "issues_url": rootProject.issues_url
+                        "version"          : project.version,
+                        "forge_version"    : project.forge_version,
+                        "minecraft_version": project.minecraft_version,
+                        "issues_url"       : rootProject.issues_url
                 ]
         )
     }

@@ -10,26 +10,26 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(HealthBar.MOD_ID)
 public class HealthBarForge {
-	private static HealthBar healthBar;
+    private static HealthBar healthBar;
 
-	public HealthBarForge(FMLJavaModLoadingContext fmlJavaModLoadingContext) {
-		healthBar = new HealthBar();
+    public HealthBarForge(FMLJavaModLoadingContext fmlJavaModLoadingContext) {
+        healthBar = new HealthBar();
 
-		healthBar.init();
+        healthBar.init();
 
-		MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
 
-		fmlJavaModLoadingContext.getModEventBus().addListener(this::registerBindings);
-	}
+        fmlJavaModLoadingContext.getModEventBus().addListener(this::registerBindings);
+    }
 
-	@SubscribeEvent
-	public void registerBindings(RegisterKeyMappingsEvent event) {
-		event.register(healthBar.getSettingsKey());
-	}
+    @SubscribeEvent
+    public void registerBindings(RegisterKeyMappingsEvent event) {
+        event.register(healthBar.getSettingsKey());
+    }
 
-	@SubscribeEvent
-	public void onClientTick(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.START)
-			healthBar.tick();
-	}
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.START)
+            healthBar.tick();
+    }
 }
