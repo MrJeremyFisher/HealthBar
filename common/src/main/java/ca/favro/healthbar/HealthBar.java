@@ -2,21 +2,14 @@ package ca.favro.healthbar;
 
 import ca.favro.healthbar.config.HealthBarConfig;
 import ca.favro.healthbar.gui.screens.MainConfigScreen;
-import com.mojang.blaze3d.pipeline.BlendFunction;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
-import org.joml.Matrix4f;
+import org.joml.Matrix3x2fStack;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.Color;
@@ -58,6 +51,15 @@ public class HealthBar {
         healthBarConfig.load();
     }
 
+
+    public static HealthBar getInstance() {
+        return instance;
+    }
+
+    public HealthBarConfig getConfig() {
+        return healthBarConfig;
+    }
+
     public KeyMapping getSettingsKey() {
         return settingsKey;
     }
@@ -74,7 +76,7 @@ public class HealthBar {
     }
 
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        PoseStack poseStack = guiGraphics.pose();
+        Matrix3x2fStack poseStack = guiGraphics.pose();
         Minecraft minecraft = Minecraft.getInstance();
 
         if (minecraft.options.hideGui
@@ -92,24 +94,23 @@ public class HealthBar {
         int x = (int) (minecraft.getWindow().getGuiScaledWidth() / healthBarConfig.getBarScale() * healthBarConfig.getxOffset() - ((float) healthBarConfig.getBarWidth() / 2) + (random.nextGaussian() * quiverIntensity));
         int y = (int) (minecraft.getWindow().getGuiScaledHeight() / healthBarConfig.getBarScale() * healthBarConfig.getyOffset() + (random.nextGaussian() * quiverIntensity));
 
-        poseStack.pushPose();
-        poseStack.scale(healthBarConfig.getBarScale(), healthBarConfig.getBarScale(), 1);
+        poseStack.pushMatrix();
+        poseStack.scale(healthBarConfig.getBarScale(), healthBarConfig.getBarScale());
 
         // Setup and draw bar
         int barColor = ARGB.colorFromFloat(healthBarConfig.getBarOpacity(), healthBarConfig.getHealthBarColor().getRed() / 255.0f, healthBarConfig.getHealthBarColor().getGreen() / 255.0f, healthBarConfig.getHealthBarColor().getBlue() / 255.0f);
-        drawVertexRect(guiGraphics, poseStack, BAR_TEXTURE, x, y, healthBarConfig.getBarHeight(), healthBarConfig.getBarWidth() * (minecraft.player.getHealth() / minecraft.player.getMaxHealth()), barColor);
+        drawVertexRect(guiGraphics, BAR_TEXTURE, x, y, healthBarConfig.getBarHeight(), healthBarConfig.getBarWidth() * (minecraft.player.getHealth() / minecraft.player.getMaxHealth()), barColor);
 
         // Setup and draw border
         int borderColor = ARGB.colorFromFloat(healthBarConfig.getBarOpacity(), 1, 1, 1);
-        drawVertexRect(guiGraphics, poseStack, BORDER_TEXTURE, x, y, healthBarConfig.getBarHeight(), healthBarConfig.getBarWidth(), borderColor);
+        drawVertexRect(guiGraphics, BORDER_TEXTURE, x, y, healthBarConfig.getBarHeight(), healthBarConfig.getBarWidth(), borderColor);
 
-        poseStack.popPose();
+        poseStack.popMatrix();
 
         // Setup and draw text
         if (healthBarConfig.getTextScale() > 0) {
-            RenderSystem.setShaderColor(1, 1, 1, 1);
-            poseStack.pushPose();
-            poseStack.scale(healthBarConfig.getTextScale(), healthBarConfig.getTextScale(), 1);
+            poseStack.pushMatrix();
+            poseStack.scale(healthBarConfig.getTextScale(), healthBarConfig.getTextScale());
 
             String healthString = String.format(healthBarConfig.getHealthStringFormat(), minecraft.player.getHealth(), minecraft.player.getMaxHealth());
 
@@ -119,29 +120,23 @@ public class HealthBar {
             guiGraphics.drawString(minecraft.font, healthString,
                     x,
                     y,
-                    Color.WHITE.getRGB(),
+                    0xFFFFFFFF,
                     true
             );
 
-            poseStack.popPose();
+            poseStack.popMatrix();
         }
     }
 
-    private void drawVertexRect(GuiGraphics guiGraphics, PoseStack poseStack, ResourceLocation resourceLocation, float x, float y, float height, float width, int color) {
-        // This is effectively GuiGraphics.innerBlit because there isn't a public method with floats. Grrrr
-        guiGraphics.drawSpecial(bufferSource -> {
-            RenderType renderType = RenderType.guiTexturedOverlay(resourceLocation);
-            Matrix4f matrix4f = poseStack.last().pose();
-            VertexConsumer vertexConsumer = bufferSource.getBuffer(renderType);
-            vertexConsumer.addVertex(matrix4f, x, y, 0).setUv(0, 0).setColor(color);
-            vertexConsumer.addVertex(matrix4f, x, y + height, 0).setUv(0, 1).setColor(color);
-            vertexConsumer.addVertex(matrix4f, x + width, y + height, 0).setUv(1, 1).setColor(color);
-            vertexConsumer.addVertex(matrix4f, x + width, y, 0).setUv(1, 0).setColor(color);
-        });
-    }
-
-    public static HealthBar getInstance() {
-        return instance;
+    private void drawVertexRect(GuiGraphics guiGraphics, ResourceLocation resourceLocation, float x, float y, float height, float width, int color) {
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, resourceLocation,
+                (int) x, (int) y,
+                0, 0,
+                (int) width, (int) height,
+                1, 1,
+                1, 1,
+                color
+        );
     }
 }
 

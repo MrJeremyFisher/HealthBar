@@ -1,10 +1,12 @@
 package ca.favro.healthbar.forge;
 
 import ca.favro.healthbar.HealthBar;
+import ca.favro.healthbar.gui.screens.MainConfigScreen;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -19,7 +21,12 @@ public class HealthBarForge {
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        fmlJavaModLoadingContext.getModEventBus().addListener(this::registerBindings);
+        RegisterKeyMappingsEvent.getBus(fmlJavaModLoadingContext.getModBusGroup()).addListener(this::registerBindings);
+
+        fmlJavaModLoadingContext.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(
+                        (parent) -> new MainConfigScreen(healthBar.getConfig())
+                )
+        );
     }
 
     @SubscribeEvent
@@ -28,8 +35,8 @@ public class HealthBarForge {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START)
-            healthBar.tick();
+    public void onClientTick(TickEvent.ClientTickEvent.Pre event) {
+        healthBar.tick();
     }
+
 }

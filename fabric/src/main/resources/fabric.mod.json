@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "healthbar",
   "version": "${version}",
-
   "name": "HealthBar",
   "description": "A lightweight and highly configurable health display.",
   "authors": [
@@ -11,14 +10,15 @@
   "contact": {
     "issues": "${issues_url}"
   },
-
   "license": "Apache 2.0",
   "icon": "icon.png",
-
   "environment": "client",
   "entrypoints": {
     "client": [
       "ca.favro.healthbar.fabric.HealthBarFabric"
+    ],
+    "modmenu": [
+      "ca.favro.healthbar.fabric.ModMenuEntrypoint"
     ]
   },
   "mixins": [
