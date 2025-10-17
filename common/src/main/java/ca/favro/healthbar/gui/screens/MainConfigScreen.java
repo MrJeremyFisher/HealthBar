@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.IllegalFormatException;
 
 public class MainConfigScreen extends Screen {
@@ -86,7 +86,10 @@ public class MainConfigScreen extends Screen {
         y += 24;
 
         addRenderableWidget(showAlwaysButton = Button.builder(Component.translatable("healthbar.screen.always_show", (healthBarConfig.isBarShowAlways() ? "On" : "Off")),
-                        (btn) -> healthBarConfig.setBarShowAlways(!healthBarConfig.isBarShowAlways()))
+                        (btn) -> {
+                            healthBarConfig.setBarShowAlways(!healthBarConfig.isBarShowAlways());
+                            healthBarConfig.save();
+                        })
                 .bounds(x, y, 200, 20)
                 .build()
         );
@@ -94,7 +97,10 @@ public class MainConfigScreen extends Screen {
         y += 24;
 
         addRenderableWidget(enableButton = Button.builder(Component.translatable("healthbar.screen.toggle", (healthBarConfig.isEnabled() ? "On" : "Off")),
-                        (btn) -> healthBarConfig.setEnabled(!healthBarConfig.isEnabled()))
+                        (btn) -> {
+                            healthBarConfig.setEnabled(!healthBarConfig.isEnabled());
+                            healthBarConfig.save();
+                        })
                 .bounds(x, y, 200, 20)
                 .build()
         );
