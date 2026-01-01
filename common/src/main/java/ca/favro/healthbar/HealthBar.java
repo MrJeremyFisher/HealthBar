@@ -12,7 +12,6 @@ import net.minecraft.util.ARGB;
 import org.joml.Matrix3x2fStack;
 import org.lwjgl.glfw.GLFW;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -23,13 +22,14 @@ public class HealthBar {
     private final KeyMapping settingsKey;
     private HealthBarConfig healthBarConfig;
     private static HealthBar instance;
+    private KeyMapping.Category category = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath("healthbar", "settings.category"));
 
     private final ResourceLocation BAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/bar.png");
     private final ResourceLocation BORDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/border.png");
     private final Random random = new Random();
 
     public HealthBar() {
-        settingsKey = new KeyMapping("healthbar.settings.key", GLFW.GLFW_KEY_H, "healthbar.settings.category");
+        settingsKey = new KeyMapping("healthbar.settings.key", GLFW.GLFW_KEY_H, category);
         instance = this;
     }
 
@@ -62,6 +62,10 @@ public class HealthBar {
 
     public KeyMapping getSettingsKey() {
         return settingsKey;
+    }
+
+    public KeyMapping.Category getKeyBindCategory() {
+        return category;
     }
 
     public void tick() {

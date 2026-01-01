@@ -1,6 +1,6 @@
 {
-  "healthbar.settings.category": "Health Bar",
-  "healthbar.settings.key": "Health Bar Settings Key",
+  "key.category.healthbar.settings.category": "Health Bar",
+  "healthbar.settings.key": "Health Bar Settings",
   "healthbar.screen.main": "Health Bar Settings",
   "healthbar.screen.toggle": "Healthbar: %s",
   "healthbar.screen.always_show": "Always Show: %s",
