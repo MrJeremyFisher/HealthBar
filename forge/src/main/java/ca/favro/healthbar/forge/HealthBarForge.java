@@ -22,11 +22,11 @@ public class HealthBarForge {
 
         healthBar.init();
 
-        AddGuiOverlayLayersEvent.getBus(fmlJavaModLoadingContext.getModBusGroup()).addListener(this::initOverlays);
+        AddGuiOverlayLayersEvent.BUS.addListener(this::initOverlays);
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        RegisterKeyMappingsEvent.getBus(fmlJavaModLoadingContext.getModBusGroup()).addListener(this::registerBindings);
+        RegisterKeyMappingsEvent.BUS.addListener(this::registerBindings);
 
         fmlJavaModLoadingContext.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory(
                         (parent) -> new MainConfigScreen(healthBar.getConfig())
