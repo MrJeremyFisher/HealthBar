@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class HealthBarFabric implements ClientModInitializer {
     private static HealthBar healthBar;
@@ -26,7 +26,7 @@ public class HealthBarFabric implements ClientModInitializer {
 
         ClientLifecycleEvents.CLIENT_STARTED.register(e -> init());
         HudElementRegistry.attachElementAfter(VanillaHudElements.HEALTH_BAR,
-                ResourceLocation.fromNamespaceAndPath("healthbar", "bar"),
+                Identifier.fromNamespaceAndPath("healthbar", "bar"),
                 healthBar::render
         );
     }

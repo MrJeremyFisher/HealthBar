@@ -7,7 +7,7 @@ import net.minecraft.util.Mth;
 import java.text.DecimalFormat;
 
 public class SliderButton extends AbstractSliderButton {
-    private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private final float minValue;
     private final float maxValue;
     private final Component content;
@@ -28,7 +28,7 @@ public class SliderButton extends AbstractSliderButton {
 
     @Override
     public void applyValue() {
-        this.displayedValue = integer ? (float) Mth.floor(Mth.clampedLerp(this.minValue, this.maxValue, this.value)) : (float) Mth.clampedLerp(this.minValue, this.maxValue, this.value);
+        this.displayedValue = integer ? (float) Mth.floor(Mth.clampedLerp(this.value, this.minValue, this.maxValue)) : (float) Mth.clampedLerp(this.value, this.minValue, this.maxValue);
     }
 
 

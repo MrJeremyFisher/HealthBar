@@ -7,7 +7,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import org.joml.Matrix3x2fStack;
 import org.lwjgl.glfw.GLFW;
@@ -22,10 +22,10 @@ public class HealthBar {
     private final KeyMapping settingsKey;
     private HealthBarConfig healthBarConfig;
     private static HealthBar instance;
-    private KeyMapping.Category category = KeyMapping.Category.register(ResourceLocation.fromNamespaceAndPath("healthbar", "settings.category"));
+    private KeyMapping.Category category = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("healthbar", "settings.category"));
 
-    private final ResourceLocation BAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/bar.png");
-    private final ResourceLocation BORDER_TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gui/border.png");
+    private final Identifier BAR_TEXTURE = Identifier.fromNamespaceAndPath(MOD_ID, "gui/bar.png");
+    private final Identifier BORDER_TEXTURE = Identifier.fromNamespaceAndPath(MOD_ID, "gui/border.png");
     private final Random random = new Random();
 
     public HealthBar() {
@@ -132,7 +132,7 @@ public class HealthBar {
         }
     }
 
-    private void drawVertexRect(GuiGraphics guiGraphics, ResourceLocation resourceLocation, float x, float y, float height, float width, int color) {
+    private void drawVertexRect(GuiGraphics guiGraphics, Identifier resourceLocation, float x, float y, float height, float width, int color) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, resourceLocation,
                 (int) x, (int) y,
                 0, 0,
