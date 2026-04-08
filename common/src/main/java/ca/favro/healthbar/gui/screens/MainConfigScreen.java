@@ -2,11 +2,13 @@ package ca.favro.healthbar.gui.screens;
 
 import ca.favro.healthbar.config.HealthBarConfig;
 import ca.favro.healthbar.gui.components.SliderButton;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import org.jspecify.annotations.NonNull;
 
 import java.awt.*;
 import java.util.IllegalFormatException;
@@ -135,7 +137,9 @@ public class MainConfigScreen extends Screen {
         try {
             String.format(healthStringFormatField.getValue(), 1f, 1f);
             fmtIsValid = true;
+            healthStringFormatField.setTextColor(0xFFFFFFFF);
         } catch (IllegalFormatException ignored) {
+            healthStringFormatField.setTextColor(0xFFFF0000);
         }
 
 
@@ -154,5 +158,22 @@ public class MainConfigScreen extends Screen {
         if (isChanged) {
             healthBarConfig.save();
         }
+    }
+
+    @Override
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        guiGraphics.centeredText(this.font, this.title, this.width / 2, this.height / 4 - 40, Color.WHITE.getRGB());
+
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public void extractBackground(@NonNull GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.extractTransparentBackground(guiGraphics);
+    }
+
+    @Override
+    public void extractTransparentBackground(GuiGraphicsExtractor guiGraphics) {
+        guiGraphics.fillGradient(0, 0, this.width, this.height, 0, 0);
     }
 }

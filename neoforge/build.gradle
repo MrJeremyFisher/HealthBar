@@ -1,6 +1,7 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.gradleup.shadow" version "9.3.0"
 }
+
 architectury {
     platformSetupLoomIde()
     neoForge()
@@ -8,7 +9,7 @@ architectury {
 
 configurations {
     common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
@@ -17,7 +18,7 @@ configurations {
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    common(project(path: ":common")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
 
@@ -30,10 +31,10 @@ processResources {
     filesMatching("META-INF/neoforge.mods.toml") {
         expand(
                 [
-                        "version"          : project.version,
-                        "neoforge_version" : project.neoforge_version,
-                        "minecraft_version": project.minecraft_version,
-                        "issues_url"       : rootProject.issues_url
+                        "version"   : project.version,
+                        "neoforge_version"   : project.neoforge_version,
+                        "minecraft_version"   : project.minecraft_version,
+                        "issues_url": rootProject.issues_url
                 ]
         )
     }
@@ -42,30 +43,23 @@ processResources {
 shadowJar {
     exclude "fabric.mod.json"
 
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
+    dependsOn(jar)
+    mainSpec.sourcePaths.clear()       // Remove default source set inclusion
+    from(zipTree(jar.archiveFile))     // Unpack jar output (preserves Loom modifications)
 
-remapJar {
-    inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set("neoforge")
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = "neoforge"
+    from rootProject.file("LICENSE")
 }
 
 jar {
-    archiveClassifier.set("dev")
+    archiveClassifier = "raw"
 }
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
 }
 
 tasks.register('cleanJar', Delete) {
@@ -75,7 +69,7 @@ tasks.register('cleanJar', Delete) {
 }
 
 tasks.register('copyJar', Copy) {
-    from remapJar
+    from shadowJar
     into '../dist'
 }
 

@@ -5,7 +5,7 @@ import ca.favro.healthbar.gui.screens.MainConfigScreen;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
@@ -79,7 +79,7 @@ public class HealthBar {
         }
     }
 
-    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public void render(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
         Matrix3x2fStack poseStack = guiGraphics.pose();
         Minecraft minecraft = Minecraft.getInstance();
 
@@ -121,7 +121,7 @@ public class HealthBar {
             x = (int) (minecraft.getWindow().getGuiScaledWidth() / healthBarConfig.getTextScale() * healthBarConfig.getxOffset() - (float) minecraft.font.width(healthString) / 2);
             y = (int) (minecraft.getWindow().getGuiScaledHeight() / healthBarConfig.getTextScale() * healthBarConfig.getyOffset() - 2) - healthBarConfig.getBarHeight() / 2;
 
-            guiGraphics.drawString(minecraft.font, healthString,
+            guiGraphics.text(minecraft.font, healthString,
                     x,
                     y,
                     0xFFFFFFFF,
@@ -132,7 +132,7 @@ public class HealthBar {
         }
     }
 
-    private void drawVertexRect(GuiGraphics guiGraphics, Identifier resourceLocation, float x, float y, float height, float width, int color) {
+    private void drawVertexRect(GuiGraphicsExtractor guiGraphics, Identifier resourceLocation, float x, float y, float height, float width, int color) {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, resourceLocation,
                 (int) x, (int) y,
                 0, 0,
