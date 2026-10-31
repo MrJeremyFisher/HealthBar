@@ -74,8 +74,8 @@ public class HealthBar {
         if (minecraft.level == null)
             return;
 
-        if (!minecraft.options.hideGui && minecraft.screen == null && getSettingsKey().consumeClick()) {
-            minecraft.setScreen(new MainConfigScreen(healthBarConfig));
+        if (!minecraft.gui.hud.isHidden() && minecraft.gui.screen() == null && getSettingsKey().consumeClick()) {
+            minecraft.gui.setScreen(new MainConfigScreen(healthBarConfig));
         }
     }
 
@@ -83,7 +83,7 @@ public class HealthBar {
         Matrix3x2fStack poseStack = guiGraphics.pose();
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (minecraft.options.hideGui
+        if (minecraft.gui.hud.isHidden()
                 || minecraft.player.isCreative()
                 || !healthBarConfig.isEnabled()
                 || (!healthBarConfig.isBarShowAlways() && minecraft.player.getHealth() >= minecraft.player.getMaxHealth()))
