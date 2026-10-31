@@ -2,6 +2,7 @@ package ca.favro.healthbar;
 
 import ca.favro.healthbar.config.HealthBarConfig;
 import ca.favro.healthbar.gui.screens.MainConfigScreen;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -10,7 +11,6 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import org.joml.Matrix3x2fStack;
-import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ public class HealthBar {
     private final Random random = new Random();
 
     public HealthBar() {
-        settingsKey = new KeyMapping("healthbar.settings.key", GLFW.GLFW_KEY_H, category);
+        settingsKey = new KeyMapping("healthbar.settings.key", InputConstants.KEY_H, category);
         instance = this;
     }
 
